@@ -1,2 +1,5 @@
 .idea/
 venv
+test/
+app/__pycache__/
+test/split*
