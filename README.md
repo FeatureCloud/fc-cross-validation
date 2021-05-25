@@ -1,7 +1,7 @@
 # Linear regression FeatureCloud App
 
 ## Description
-A Cross Validation FeautureCloud app, creating local splits for a k-fold cross validation
+A Cross Validation FeautureCloud app, creating local splits for a k-fold cross validation.
 
 ## Input
 - data.csv containing the local data (columns: features; rows: samples)
