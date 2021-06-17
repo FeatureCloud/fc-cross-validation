@@ -33,6 +33,7 @@ class AppLogic:
 
         # === Variables from config.yml
         self.data_filename = None
+        self.format = None
         self.label_column = None
         self.sep = None
         self.train_output = None
@@ -74,30 +75,17 @@ class AppLogic:
         print("Parsing config file...", flush=True)
         with open(self.INPUT_DIR + "/config.yml") as f:
             config = yaml.load(f, Loader=yaml.FullLoader)["fc_cross_validation"]
-            print("config file", flush=True)
-
             self.data_filename = config["input"]["data"]
-            print(self.data_filename)
+            self.format = self.data_filename.split(".")[-1].strip()
             self.label_column = config["input"]["label_column"]
-            print(self.label_column)
             self.sep = config["input"]["sep"]
-            print(self.sep)
-
             self.train_output = config["output"]["train"]
-            print(self.train_output)
             self.test_output = config["output"]["test"]
-            print(self.test_output)
             self.split_dir = config["output"]["split_dir"]
-            print(self.split_dir)
-
             self.n_splits = config["cross_validation"]["n_splits"]
-            print(self.n_splits)
             self.shuffle = config["cross_validation"]["shuffle"]
-            print(self.shuffle)
             self.stratify = config["cross_validation"]["stratify"]
-            print(self.stratify)
             self.random_state = config["cross_validation"]["random_state"]
-            print(self.random_state)
 
         print("Copy config file to outpur dir...", flush=True)
         shutil.copyfile(self.INPUT_DIR + "/config.yml", self.OUTPUT_DIR + "/config.yml")
@@ -134,7 +122,7 @@ class AppLogic:
                 print("[CLIENT] Read config...", flush=True)
                 self.read_config()
                 print("[CLIENT] Read ta...", flush=True)
-                self.dataset = read_data(f'{self.INPUT_DIR}/{self.data_filename}', sep=self.sep)
+                self.dataset = read_data(f'{self.INPUT_DIR}/{self.data_filename}', sep=self.sep, format=self.format)
                 # Here you could read in your input files
                 state = state_create_splits
                 print("[CLIENT] Read input finished.", flush=True)
@@ -145,7 +133,7 @@ class AppLogic:
 
                 # Compute local results
                 create_splits(self.dataset, self.label_column, self.n_splits, self.stratify, self.shuffle,
-                              self.random_state, self.OUTPUT_DIR + "/" + self.split_dir)
+                              self.random_state, self.OUTPUT_DIR + "/" + self.split_dir, self.format)
 
                 if self.coordinator:
                     self.data_incoming = ['DONE']
@@ -157,7 +145,7 @@ class AppLogic:
                 print("[CLIENT] Create folds finished.", flush=True)
 
             if state == state_finish:
-                print("Finishing", flush=True)
+                print("Finishing...", flush=True)
                 self.progress = 'finishing...'
                 if len(self.data_incoming) == len(self.clients):
                     print("[CLIENT] All clients have finished. Finish coordinator.", flush=True)

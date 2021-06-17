@@ -34,3 +34,15 @@ fc_cross_validation:
     stratify: false # If true, labels will be equally distributed between the splits. If true, label_column cannot be Null
     random_state: Null # Seed to create reproducible splits, Null possible
 ```
+## Requirements
+- bottle 
+- pyyaml
+- pandas
+- pyparsing
+- numpy
+- scikit-learn
+- pytz
+- six
+- threadpoolctl
+- joblib
+- scipy
