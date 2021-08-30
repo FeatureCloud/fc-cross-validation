@@ -1,0 +1,14 @@
+fc_cross_validation:
+  input:
+    data: "data.csv"
+    label_column: 10
+    sep: ","
+  output:
+    train: "train.csv"
+    test: "test.csv"
+    split_dir: "data"
+  cross_validation:
+    n_splits: 10
+    shuffle: true
+    stratify: false
+    random_state: 42
