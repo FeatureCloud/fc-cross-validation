@@ -133,7 +133,7 @@ class AppLogic:
                 # Read the config file
                 print("[CLIENT] Read config...", flush=True)
                 self.read_config()
-                print("[CLIENT] Read ta...", flush=True)
+                print("[CLIENT] Read data...", flush=True)
                 self.dataset = read_data(f'{self.INPUT_DIR}/{self.data_filename}', sep=self.sep)
                 # Here you could read in your input files
                 state = state_create_splits
@@ -148,7 +148,7 @@ class AppLogic:
                               self.random_state, self.OUTPUT_DIR + "/" + self.split_dir)
 
                 if self.coordinator:
-                    self.data_incoming = ['DONE']
+                    self.data_incoming.append('DONE')
                     state = state_finish
                 else:
                     self.data_outgoing = 'DONE'
