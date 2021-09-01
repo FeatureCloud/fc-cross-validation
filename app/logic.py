@@ -136,7 +136,7 @@ class AppLogic:
                               self.random_state, self.OUTPUT_DIR + "/" + self.split_dir, self.format)
 
                 if self.coordinator:
-                    self.data_incoming = ['DONE']
+                    self.data_incoming.append('DONE')
                     state = state_finish
                 else:
                     self.data_outgoing = 'DONE'
