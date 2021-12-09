@@ -1,0 +1,10 @@
+bottle
+jsonpickle
+joblib
+numpy
+bios
+pydot
+pyyaml
+pandas
+sklearn
+FeatureCloud==0.0.4

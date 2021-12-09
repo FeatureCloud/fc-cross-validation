@@ -1,0 +1,13 @@
+cross_validation:
+  local_dataset:
+    data: data.csv
+    target_value: '10'
+    sep: ','
+  n_splits: 10
+  shuffle: true
+  stratify: false
+  random_state: null
+  split_dir: data
+  result:
+    train: train.csv
+    test: test.csv
