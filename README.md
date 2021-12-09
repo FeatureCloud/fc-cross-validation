@@ -33,7 +33,7 @@ Can be combined with the following apps:
 - Post: 
   - Various preprocessing apps (e.g. Normalization, Feature Selection, ...) 
   - Various analysis apps (e.g. Random Forest, Logistic Regression, Linear Regression)
-![Diagram](../data/images/CrossValidation.png)
+![Diagram](data/images/CrossValidation.png)
 ## Config
 Use the config file to customize your training. Just upload it together with your training data as `config.yml`
 ```
