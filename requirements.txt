@@ -1,6 +1,0 @@
-bottle # webserver
-pyyaml # to read config file
-pandas
-pyparsing
-numpy
-scikit-learn

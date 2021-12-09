@@ -1,7 +1,0 @@
-venv
-.gitignore
-test/
-build.sh
-Dockerfile
-README.md
-app/__pycache__/
