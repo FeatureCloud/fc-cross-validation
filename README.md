@@ -1,4 +1,4 @@
-# Linear regression FeatureCloud App
+# Cross-Validation FeatureCloud App
 
 ## Description
 A Cross Validation FeautureCloud app, creating local splits for a k-fold cross validation.
