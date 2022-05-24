@@ -13,7 +13,6 @@ def create_splits(data, label, n_splits, stratify, shuffle, random_state, output
         print(f'Use stratified kfold cv for label column {label}', flush=True)
         cv = StratifiedKFold(n_splits=n_splits, shuffle=shuffle, random_state=random_state)
         y = data.loc[:, label]
-        data = data.drop(label, axis=1)
         for k, (train_indices, test_indices) in enumerate(cv.split(data, y)):
             path = f'{output_dir}/split_{str(k+1)}'
             os.mkdir(path)
