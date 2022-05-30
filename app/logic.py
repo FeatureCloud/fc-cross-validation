@@ -39,7 +39,7 @@ class AppLogic:
         self.test_output = None
         self.split_dir = None
         self.n_splits = 5
-        self.shuffle = True
+        self.n_repeats = 1
         self.stratify = False
         self.random_state = None
 
@@ -92,8 +92,8 @@ class AppLogic:
 
             self.n_splits = config["cross_validation"]["n_splits"]
             print(self.n_splits)
-            self.shuffle = config["cross_validation"]["shuffle"]
-            print(self.shuffle)
+            self.n_repeats = config["cross_validation"]["n_repeats"]
+            print(self.n_repeats)
             self.stratify = config["cross_validation"]["stratify"]
             print(self.stratify)
             self.random_state = config["cross_validation"]["random_state"]
@@ -144,7 +144,7 @@ class AppLogic:
                 print("[CLIENT] Create folds...", flush=True)
 
                 # Compute local results
-                create_splits(self.dataset, self.label_column, self.n_splits, self.stratify, self.shuffle,
+                create_splits(self.dataset, self.label_column, self.n_splits, self.stratify, self.n_repeats,
                               self.random_state, self.OUTPUT_DIR + "/" + self.split_dir)
 
                 if self.coordinator:
