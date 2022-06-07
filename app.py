@@ -12,14 +12,15 @@
     limitations under the License.
 """
 import ConfigState
-from FeatureCloud.engine.app import app_state, Role, AppState, LogLevel
-from FeatureCloud.engine.app import State as op_state
+from FeatureCloud.app.engine.app import app_state, Role, AppState, LogLevel
+from FeatureCloud.app.engine.app import State as op_state
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold, KFold
 import os
 from utils import save_numpy, load_numpy, sep_feat_from_label
+import numpy as np
 
-name = 'cross_validation'
+name = 'fc_cross_validation'
 
 
 @app_state(name='initial', role=Role.BOTH, app_name=name)
@@ -52,7 +53,11 @@ class LoadAndSplit(ConfigState.State):
     def read_data(self):
         file_name = self.load('input_files')['data'][0]
         format = self.load('format')
-        if format in ["npy", "npz"]:
+        if format == "npz":
+            ds = np.load(file_name, allow_pickle=True)
+            data, targets = ds['data'], ds['targets']
+            df = pd.DataFrame({"features": list(data), "label": targets})
+        elif format == "npy":
             df = self.load_numpy_files(file_name)
         elif format in ["csv", "txt"]:
             df = pd.read_csv(file_name, sep=self.config['local_dataset']['sep'])
@@ -72,7 +77,7 @@ class LoadAndSplit(ConfigState.State):
             return df
         else:
             self.log("For NumPy files, the format of target value should be mentioned through `target_value` "
-                         "key in config file", LogLevel.ERROR)
+                     "key in config file", LogLevel.ERROR)
             self.update(state=op_state.ERROR)
 
     def create_splits(self, data):
@@ -113,11 +118,15 @@ class WriteResults(AppState):
                                                     df.iloc[:, 0].to_numpy(),
                                                     df.iloc[:, 1].to_numpy(),
                                                     self.load('target'))
-        save = {"npy": np_lambda, "npz": np_lambda, "csv": csv_writer, "txt": csv_writer}
+        npz_lambda = lambda filename, df: np.savez_compressed(filename,
+                                                              data=df.features.values,
+                                                              targets=df.label.values
+                                                              )
+        save = {"npy": np_lambda, "npz": npz_lambda, "csv": csv_writer, "txt": csv_writer}
         progress = 0.5
         step = 0.4 / len(self.load('splits'))
         for [train_split, test_split], train_filename, test_filename in files:
-            print(train_filename, test_filename)
+            self.log(f"Train file: {train_filename}, Test file: {test_filename}")
             save[self.load('format')](train_filename, train_split)
             save[self.load('format')](test_filename, test_split)
             progress += step
