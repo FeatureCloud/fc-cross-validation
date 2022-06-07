@@ -4,6 +4,7 @@ first apps in FC workflow followed by different Machine Learning or Data analysi
 
 ## Input
 Similar to Data Distributor app, Cross-Validation (CV) accepts Numpy files (`.npy`, `.npz`) files alongside `.csv` and `.txt` files.
+For `npz` files, `data` and `targets` key should be provided for sample features and labels(target values) correspondingly. 
 For `.csv` and `.txt` files, clients should identify the delimiter character using the `sep` key in the config file. For NumPy file 
 they have to choose from three possible options for `target_value`:
 - `same-sep`: target value in the same file but separate array, i.e., the first array includes samples and the second one contains target values.
