@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-from FeatureCloud.engine.app import LogLevel, app
-from FeatureCloud.api.http_ctrl import api_server
-from FeatureCloud.api.http_web import web_server
+from FeatureCloud.app.engine.app import LogLevel, app
+from FeatureCloud.app.api.http_ctrl import api_server
+from FeatureCloud.app.api.http_web import web_server
 from bottle import Bottle
 
 
