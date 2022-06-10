@@ -1,7 +1,7 @@
 fc_cross_validation:
   input:
     data: "data.csv"
-    label_column: 10
+    label_column: "y"
     sep: ","
   output:
     train: "train.csv"
@@ -10,5 +10,5 @@ fc_cross_validation:
   cross_validation:
     n_splits: 3
     stratify: false
-    random_state: 42
-    n_repeats: 3
+    random_state: 1
+    shuffle: true
