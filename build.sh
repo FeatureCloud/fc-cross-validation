@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build . --tag featurecloud.ai/fc_cross_validation
+docker build . --platform linux/amd64 --tag featurecloud.ai/fc_cross_validation

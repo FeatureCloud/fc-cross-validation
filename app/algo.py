@@ -13,8 +13,7 @@ def create_splits(data, label, n_splits, stratify, shuffle, random_state, output
     if stratify and (label is not None):
         print(f'Use stratified kfold cv for label column {label}', flush=True)
         cv = StratifiedKFold(n_splits=n_splits, shuffle=shuffle, random_state=random_state)
-        y = data.loc[:, label]
-        for k, (train_indices, test_indices) in enumerate(cv.split(data, y)):
+        for k, (train_indices, test_indices) in enumerate(cv.split(data, data.loc[:, label])):
             path = f'{output_dir}/split_{str(k + 1)}'
             os.mkdir(path)
             pd.DataFrame(data.iloc[train_indices], columns=data.columns).to_csv(f'{path}/train.csv', index=False)
