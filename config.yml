@@ -1,14 +1,14 @@
 fc_cross_validation:
   input:
-    data: "data.csv"
-    label_column: "y"
-    sep: ","
+    data: "data.csv" # Filename of your data
+    label_column: "target" # Label column name in your dara
+    sep: "," # Separation indicator in your file
   output:
-    train: "train.csv"
-    test: "test.csv"
-    split_dir: "data"
+    train: "train.csv" # Filename of the training set in each fold
+    test: "test.csv" # Filename of the test set in each fold
+    split_dir: "data" # Directory name containing the splits
   cross_validation:
-    n_splits: 3
-    stratify: false
-    random_state: 1
-    shuffle: true
+    n_splits: 5 # Number of folds to be created
+    shuffle: true # Shuffle the data before creating the folds
+    stratify: true # Stratify the y values
+    random_state: 1 # Random state for reproducible splits

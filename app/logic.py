@@ -27,8 +27,8 @@ class AppLogic:
         self.coordinator = None
         self.clients = None
 
-        # === Directories, input files always in INPUT_DIR. Write your output always in OUTPUT_DIR
-        self.INPUT_DIR = "/mnt/input"
+        # === Directories, test_data files always in INPUT_DIR. Write your output always in OUTPUT_DIR
+        self.INPUT_DIR = "/mnt/test_data"
         self.OUTPUT_DIR = "/mnt/output"
 
         # === Variables from config.yml
@@ -76,11 +76,11 @@ class AppLogic:
             config = yaml.load(f, Loader=yaml.FullLoader)["fc_cross_validation"]
             print("config file", flush=True)
 
-            self.data_filename = config["input"]["data"]
+            self.data_filename = config["test_data"]["data"]
             print(self.data_filename)
-            self.label_column = config["input"]["label_column"]
+            self.label_column = config["test_data"]["label_column"]
             print(self.label_column)
-            self.sep = config["input"]["sep"]
+            self.sep = config["test_data"]["sep"]
             print(self.sep)
 
             self.train_output = config["output"]["train"]
@@ -128,16 +128,16 @@ class AppLogic:
                 print("[CLIENT] Initializing finished.", flush=True)
 
             if state == state_read_input:
-                self.progress = "read input..."
-                print("[CLIENT] Read input...", flush=True)
+                self.progress = "read test_data..."
+                print("[CLIENT] Read test_data...", flush=True)
                 # Read the config file
                 print("[CLIENT] Read config...", flush=True)
                 self.read_config()
                 print("[CLIENT] Read data...", flush=True)
                 self.dataset = read_data(f'{self.INPUT_DIR}/{self.data_filename}', sep=self.sep)
-                # Here you could read in your input files
+                # Here you could read in your test_data files
                 state = state_create_splits
-                print("[CLIENT] Read input finished.", flush=True)
+                print("[CLIENT] Read test_data finished.", flush=True)
 
             if state == state_create_splits:
                 self.progress = "Create folds..."
